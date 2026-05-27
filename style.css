@@ -238,6 +238,10 @@ section, .hero {
   justify-content: space-between;
   box-shadow: 0 1px 0 rgba(36, 38, 49, 0.06), 0 2px 8px rgba(36, 38, 49, 0.04);
 }
+/* Click-to-navigate is desktop-only (mobile uses native swipe). */
+@media (min-width: 481px) {
+  .testimonial__card { cursor: pointer; }
+}
 
 .testimonial__quote-wrap {
   position: relative;

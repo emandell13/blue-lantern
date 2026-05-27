@@ -274,6 +274,19 @@
         });
       });
 
+      // Click a non-active card to bring it to center. Desktop-only —
+      // mobile uses native horizontal swipe, where click-to-navigate would
+      // get in the way of reading and text selection.
+      var isMobileQuery = window.matchMedia('(max-width: 480px)');
+      cards.forEach(function (card, idx) {
+        card.addEventListener('click', function () {
+          if (isMobileQuery.matches) return;
+          if (idx !== getActiveIdx()) {
+            card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        });
+      });
+
       setActive(0);
     })();
   </script>

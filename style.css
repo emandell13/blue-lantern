@@ -147,10 +147,7 @@ section, .hero {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-}
-.trusted__row + .trusted__row {
-  margin-top: 24px;
+  gap: 24px 40px;
 }
 .trusted__cell {
   width: 175px;
@@ -458,8 +455,8 @@ section, .hero {
     gap: 24px;
     align-items: center;
   }
+  .experience__body { gap: 24px; }
   .experience__portrait { width: 240px; }
-  .experience__body .section-header { text-align: center; }
 
   .details__topic {
     grid-template-columns: 1fr;
@@ -472,6 +469,9 @@ section, .hero {
 
 /* ---------- Responsive: small mobile ---------- */
 @media (max-width: 480px) {
+  main { padding: 0 32px 32px; }
+
+  .trusted__row { gap: 24px; }
   .trusted__cell { width: 45%; height: 48px; }
   .testimonial__attribution {
     flex-direction: column;

@@ -234,11 +234,17 @@
       var dots = Array.prototype.slice.call(document.querySelectorAll('.testimonial__dot'));
 
       function getActiveIdx() {
-        var center = track.scrollLeft + track.clientWidth / 2;
+        // Find the card whose scroll-snap-aligned position is closest to the
+        // current scrollLeft. Using card-center-vs-viewport-center breaks on
+        // desktop where cards are narrower than the viewport — at scrollLeft
+        // 0 the second card's center is actually closer to the viewport
+        // center than the first card's center.
         var best = 0, bestDist = Infinity;
         for (var i = 0; i < cards.length; i++) {
           var c = cards[i];
-          var d = Math.abs((c.offsetLeft + c.offsetWidth / 2) - center);
+          var snapLeft = c.offsetLeft + c.offsetWidth / 2 - track.clientWidth / 2;
+          if (snapLeft < 0) snapLeft = 0; // browser clamps to 0
+          var d = Math.abs(snapLeft - track.scrollLeft);
           if (d < bestDist) { bestDist = d; best = i; }
         }
         return best;

@@ -234,17 +234,17 @@
       var dots = Array.prototype.slice.call(document.querySelectorAll('.testimonial__dot'));
 
       function getActiveIdx() {
-        // Find the card whose scroll-snap-aligned position is closest to the
-        // current scrollLeft. Using card-center-vs-viewport-center breaks on
-        // desktop where cards are narrower than the viewport — at scrollLeft
-        // 0 the second card's center is actually closer to the viewport
-        // center than the first card's center.
+        // Use viewport-relative positions (getBoundingClientRect) instead of
+        // offsetLeft. offsetLeft is relative to the offsetParent, which is
+        // BODY here — so it gave the wrong answer on desktop when main is
+        // centered (track sits at non-zero body-x). The card whose center is
+        // closest to the track's visible center is the active one.
+        var trackRect = track.getBoundingClientRect();
+        var trackCenter = trackRect.left + trackRect.width / 2;
         var best = 0, bestDist = Infinity;
         for (var i = 0; i < cards.length; i++) {
-          var c = cards[i];
-          var snapLeft = c.offsetLeft + c.offsetWidth / 2 - track.clientWidth / 2;
-          if (snapLeft < 0) snapLeft = 0; // browser clamps to 0
-          var d = Math.abs(snapLeft - track.scrollLeft);
+          var r = cards[i].getBoundingClientRect();
+          var d = Math.abs((r.left + r.width / 2) - trackCenter);
           if (d < bestDist) { bestDist = d; best = i; }
         }
         return best;

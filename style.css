@@ -430,6 +430,8 @@ section, .hero {
 @media (max-width: 900px) {
   main { padding: 0 24px 32px; }
 
+  .desktop-only-br { display: none; }
+
   .site-header {
     padding-top: calc(40px - 23px * var(--hero-progress));
     height: calc(121px - 65px * var(--hero-progress));
